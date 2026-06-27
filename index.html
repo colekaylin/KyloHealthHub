@@ -14,11 +14,12 @@
             --bg-pink: #fceeed;       /* Beautiful soft pastel pink */
             --bg-cream: #fffde6;      /* Soft pale yellow */
             --bg-lavender: #eae4f7;   /* Soft pale purple */
+            --bg-mint: #e2f4f7;       /* Soft pale mint green for documents card */
             --text-dark: #000000;
             --text-muted: #2d2a29;
             --accent-coral: #ff7a6b;  /* Signature bright coral button color */
             --card-white: #ffffff;
-            --puppy-red: #c16a4b;     /* Rich red/apricot coat color based on image_440246.png */
+            --puppy-red: #c16a4b;     /* Rich red/apricot coat color */
             --puppy-ears: #aa593b;    /* Slightly deeper tone for depth */
         }
 
@@ -115,6 +116,7 @@
         .tabs {
             display: flex;
             gap: 24px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -182,7 +184,6 @@
             position: relative;
             display: inline-block;
         }
-        /* Hand-drawn decorative flourish line accent */
         .hero h1 span::after {
             content: "‴";
             position: absolute;
@@ -316,6 +317,14 @@
             background: white;
             display: inline-block;
         }
+        
+        .doc-link {
+            color: var(--text-dark);
+            font-weight: 700;
+            text-decoration: underline;
+            transition: opacity 0.2s;
+        }
+        .doc-link:hover { opacity: 0.6; }
 
         /* DYNAMIC COLLAGE GALLERY SYSTEM */
         .collage-container {
@@ -367,7 +376,7 @@
         @media (max-width: 800px) {
             .hero h1 { font-size: 3rem; letter-spacing: -1.5px; }
             .navbar { justify-content: center; padding: 20px; }
-            .tabs { width: 100%; justify-content: center; margin-top: 5px; }
+            .tabs { width: 100%; justify-content: center; margin-top: 5px; gap: 14px; }
             .cta-btn { display: none; } 
             .collage-container { gap: 12px; }
         }
@@ -395,16 +404,16 @@
                 <button class="tab-btn active" id="btn-home" onclick="switchTab('dashboard')">Home</button>
                 <button class="tab-btn" id="btn-health" onclick="switchTab('health')">Health Logs</button>
                 <button class="tab-btn" id="btn-gallery" onclick="switchTab('gallery')">Gallery</button>
+                <button class="tab-btn" id="btn-docs" onclick="switchTab('docs')">Documents</button>
             </div>
             <button class="cta-btn" onclick="switchTab('health')">View Records &rarr;</button>
         </nav>
 
         <!-- Hero Title Graphic -->
         <header class="hero">
-            <!-- Perfectly cleaned header layout -->
-            <h1><span>Kylo Cole's Hub</span></h1>
+            <h1><span>Kylo Cole</span></h1>
             
-            <!-- Upgraded Character Illustration Placeholder inspired by image_440246.png -->
+            <!-- Upgraded Character Illustration Placeholder -->
             <div class="avatar-container">
                 <svg viewBox="0 0 100 100" width="100%" height="100%">
                     <!-- Fluffy Droopy Ears -->
@@ -416,7 +425,7 @@
                     <circle cx="36" cy="64" r="10" fill="var(--puppy-red)" />
                     <circle cx="64" cy="64" r="10" fill="var(--puppy-red)" />
                     
-                    <!-- Kylo's Signature White Forehead Blaze & Muzzle from image_440246.png -->
+                    <!-- Kylo's Signature White Forehead Blaze & Muzzle -->
                     <path d="M44,20 Q50,22 56,20 Q54,42 62,54 Q50,56 38,54 Q46,42 44,20 Z" fill="#ffffff" />
                     <ellipse cx="50" cy="58" rx="14" ry="10" fill="#ffffff" />
                     
@@ -525,6 +534,41 @@
                 </div>
             </section>
 
+            <!-- BRAND NEW: DOCUMENTS TAB -->
+            <section id="docs" class="tab-content">
+                <div class="card" style="background-color: var(--bg-mint); border-radius: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px;">
+                        <div>
+                            <h2>Document Vault</h2>
+                            <p style="font-weight: 500; color: var(--text-muted);">Store registration files, vet receipts, and agreements safely.</p>
+                        </div>
+                        <button class="upload-widget-btn" onclick="addNewDocWidget()">+ Add Document Link</button>
+                    </div>
+
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%;">Document Name</th>
+                                <th style="width: 25%;">Date Added</th>
+                                <th style="width: 25%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doc-target-table">
+                            <tr>
+                                <td style="font-weight: 700;">Breeder Contract Agreement.pdf</td>
+                                <td style="color: var(--text-muted);">06/26/2026</td>
+                                <td><a href="#" class="doc-link" target="_blank">View File &rarr;</a></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 700;">AKC Registration Profile.pdf</td>
+                                <td style="color: var(--text-muted);">06/26/2026</td>
+                                <td><a href="#" class="doc-link" target="_blank">View File &rarr;</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -557,9 +601,10 @@
             if(tabId === 'dashboard') document.getElementById('btn-home').classList.add('active');
             if(tabId === 'health') document.getElementById('btn-health').classList.add('active');
             if(tabId === 'gallery') document.getElementById('btn-gallery').classList.add('active');
+            if(tabId === 'docs') document.getElementById('btn-docs').classList.add('active');
         }
 
-        // Live Dynamic Upload Link Widget
+        // Live Dynamic Upload Link Widget for Gallery
         function addNewPhotoWidget() {
             const imgUrl = prompt("Paste your photo's direct web image link or GitHub file link here:");
             if (!imgUrl) return; 
@@ -577,6 +622,31 @@
             
             newDiv.appendChild(newImg);
             targetContainer.appendChild(newDiv);
+        }
+
+        // Live Dynamic Upload Link Widget for Documents Table
+        function addNewDocWidget() {
+            const docName = prompt("Enter a nickname/title for this document (e.g., Vet Checkup Receipt):");
+            if (!docName) return;
+            const docUrl = prompt("Paste your document's URL or GitHub file link here:");
+            if (!docUrl) return;
+
+            // Automatically format today's date smoothly (MM/DD/YYYY)
+            const today = new Date();
+            const formattedDate = String(today.getMonth() + 1).padStart(2, '0') + '/' + String(today.getDate()).padStart(2, '0') + '/' + today.getFullYear();
+
+            const tableTarget = document.getElementById('doc-target-table');
+
+            // Generate clean structural elements matching table style
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td style="font-weight: 700;">${docName}</td>
+                <td style="color: var(--text-muted);">${formattedDate}</td>
+                <td><a href="${docUrl}" class="doc-link" target="_blank">View File &rarr;</a></td>
+            `;
+
+            tableTarget.appendChild(newRow);
         }
 
         function loadProgressBar() {
