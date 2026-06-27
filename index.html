@@ -18,6 +18,8 @@
             --text-muted: #2d2a29;
             --accent-coral: #ff7a6b;  /* Signature bright coral button color */
             --card-white: #ffffff;
+            --puppy-red: #c16a4b;     /* Rich red/apricot coat color based on image_440246.png */
+            --puppy-ears: #aa593b;    /* Slightly deeper tone for depth */
         }
 
         * {
@@ -89,7 +91,7 @@
 
         /* Main Site Content Layout */
         #main-site-content {
-            display: none; /* Hidden until password is typed successfully */
+            display: none; 
         }
 
         /* Top Brand Header Bar */
@@ -107,7 +109,7 @@
             letter-spacing: -1px;
         }
 
-        /* Startup Style Center Nav Tabs */
+        /* Center Nav Tabs */
         .tabs {
             display: flex;
             gap: 24px;
@@ -139,7 +141,6 @@
             background-color: var(--text-dark);
         }
 
-        /* Hero Pill Button */
         .cta-btn {
             background-color: var(--text-dark);
             color: white;
@@ -162,7 +163,7 @@
         /* Giant Hero Section Layout */
         .hero {
             text-align: center;
-            padding: 80px 20px 60px 20px;
+            padding: 80px 20px 40px 20px;
             max-width: 900px;
             margin: 0 auto;
         }
@@ -172,7 +173,7 @@
             font-weight: 800;
             letter-spacing: -3px;
             line-height: 1.05;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .hero h1 span {
@@ -189,20 +190,24 @@
             letter-spacing: 2px;
         }
 
-        .hero-btn {
-            background-color: var(--accent-coral);
-            color: white;
-            padding: 16px 36px;
-            border-radius: 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
+        /* Animated Kylo Character Frame */
+        .avatar-container {
+            width: 180px;
+            height: 180px;
+            background-color: var(--bg-cream);
+            border-radius: 50%;
             margin: 0 auto;
-            display: inline-flex;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 25px rgba(255, 122, 107, 0.25);
+            border: 3px solid var(--text-dark);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .avatar-container:hover {
+            transform: scale(1.06) rotate(3deg);
         }
 
         /* Content Sections Wrapper */
@@ -391,7 +396,39 @@
         <!-- Hero Title Graphic -->
         <header class="hero">
             <h1>The power of growth <br>and <span>scale</span></h1>
-            <button class="hero-btn" onclick="switchTab('dashboard')">Read more &#x2197;</button>
+            
+            <!-- Upgraded Character Illustration Placeholder inspired by image_440246.png -->
+            <div class="avatar-container">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <!-- Fluffy Droopy Ears -->
+                    <ellipse cx="22" cy="50" rx="11" ry="18" fill="var(--puppy-ears)" transform="rotate(5, 22, 50)" />
+                    <ellipse cx="78" cy="50" rx="11" ry="18" fill="var(--puppy-ears)" transform="rotate(-5, 78, 50)" />
+                    
+                    <!-- Main Fluffy Head Base -->
+                    <circle cx="50" cy="48" r="30" fill="var(--puppy-red)" />
+                    <circle cx="36" cy="64" r="10" fill="var(--puppy-red)" />
+                    <circle cx="64" cy="64" r="10" fill="var(--puppy-red)" />
+                    
+                    <!-- Kylo's Signature White Forehead Blaze & Muzzle from image_440246.png -->
+                    <path d="M44,20 Q50,22 56,20 Q54,42 62,54 Q50,56 38,54 Q46,42 44,20 Z" fill="#ffffff" />
+                    <ellipse cx="50" cy="58" rx="14" ry="10" fill="#ffffff" />
+                    
+                    <!-- 8-Week-Old Shiny Dark Eyes -->
+                    <circle cx="36" cy="44" r="4" fill="#1a1a1a" />
+                    <circle cx="64" cy="44" r="4" fill="#1a1a1a" />
+                    <!-- Eye Highlights -->
+                    <circle cx="34.8" cy="42.8" r="1.2" fill="#ffffff" />
+                    <circle cx="62.8" cy="42.8" r="1.2" fill="#ffffff" />
+                    
+                    <!-- Puppy Nose & Mouth -->
+                    <path d="M46,54 L54,54 Q50,59 46,54" fill="#1a1a1a" />
+                    <path d="M48,59 Q50,62 52,59" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                    
+                    <!-- Subtle Rosy Cheeks -->
+                    <circle cx="26" cy="52" r="4" fill="#ff7a6b" opacity="0.25" />
+                    <circle cx="74" cy="52" r="4" fill="#ff7a6b" opacity="0.25" />
+                </svg>
+            </div>
         </header>
 
         <!-- Interactive Content Wrapper -->
@@ -405,7 +442,7 @@
                         <h2>Quick Profile</h2>
                         <div class="profile-row"><label>Breed</label><span>Cavapoo</span></div>
                         <div class="profile-row"><label>Gender</label><span>Female</span></div>
-                        <div class="profile-row"><label>Birthday</label><span>August 2026</span></div>
+                        <div class="profile-row"><label>Birthday</label><span>August 19, 2026</span></div>
                     </div>
 
                     <!-- Growth Tracking Box -->
@@ -456,7 +493,7 @@
                 </div>
             </section>
 
-            <!-- PHOTO GALLERY COLLAGE TAB WITH ADD WIDGET -->
+            <!-- PHOTO GALLERY COLLAGE TAB -->
             <section id="gallery" class="tab-content">
                 <div class="card" style="background-color: var(--bg-lavender); border-radius: 40px;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
@@ -468,15 +505,12 @@
                     </div>
                     
                     <div class="collage-container" id="collage-target-grid">
-                        <!-- Shape 1: Circle -->
                         <div class="shape-circle">
                             <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Kylo 1">
                         </div>
-                        <!-- Shape 2: Oval Capsule -->
                         <div class="shape-capsule">
                             <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=600" alt="Kylo 2">
                         </div>
-                        <!-- Shape 3: Vertical Pill -->
                         <div class="shape-tall-pill">
                             <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600" alt="Kylo 3">
                         </div>
@@ -491,19 +525,17 @@
         // Password Verification Logic
         function checkPassword() {
             const entered = document.getElementById('password-input').value;
-            const correctPassword = "Kylo2026"; // Feel free to edit this exact text string to alter your password!
+            const correctPassword = "Kylo2026"; 
             
             if (entered === correctPassword) {
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('main-site-content').style.display = 'block';
-                // Trigger progress bar load nicely after unlocking
                 setTimeout(loadProgressBar, 200);
             } else {
                 document.getElementById('login-error').style.display = 'block';
             }
         }
 
-        // Allow pressing 'Enter' key to unlock site seamlessly
         document.getElementById('password-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') checkPassword();
         });
@@ -525,13 +557,10 @@
             const imgUrl = prompt("Paste your photo's direct web image link or GitHub file link here:");
             if (!imgUrl) return; 
 
-            // Stagger shapes dynamically to keep the SaaS mockup look clean
             const shapes = ['shape-circle', 'shape-capsule', 'shape-tall-pill'];
             const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-            
             const targetContainer = document.getElementById('collage-target-grid');
             
-            // Generate structural element
             const newDiv = document.createElement('div');
             newDiv.className = randomShape;
             
