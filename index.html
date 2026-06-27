@@ -101,6 +101,8 @@
             align-items: center;
             padding: 24px 5%;
             width: 100%;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .brand {
@@ -172,18 +174,19 @@
             font-size: 5rem;
             font-weight: 800;
             letter-spacing: -3px;
-            line-height: 1.05;
-            margin-bottom: 35px;
+            line-height: 1.1;
+            margin-bottom: 45px;
         }
 
         .hero h1 span {
             position: relative;
             display: inline-block;
         }
+        /* Hand-drawn decorative flourish line accent */
         .hero h1 span::after {
             content: "‴";
             position: absolute;
-            bottom: -25px;
+            bottom: -30px;
             left: 45%;
             font-size: 2.5rem;
             color: var(--accent-coral);
@@ -360,9 +363,12 @@
             margin-top: 10px;
         }
 
+        /* Responsive Breakpoints */
         @media (max-width: 800px) {
             .hero h1 { font-size: 3rem; letter-spacing: -1.5px; }
-            .tabs { display: none; }
+            .navbar { justify-content: center; padding: 20px; }
+            .tabs { width: 100%; justify-content: center; margin-top: 5px; }
+            .cta-btn { display: none; } 
             .collage-container { gap: 12px; }
         }
     </style>
@@ -395,7 +401,8 @@
 
         <!-- Hero Title Graphic -->
         <header class="hero">
-            <h1>Kylo Cole's Hub <br>and <span>scale</span></h1>
+            <!-- Perfectly cleaned header layout -->
+            <h1><span>Kylo Cole's Hub</span></h1>
             
             <!-- Upgraded Character Illustration Placeholder inspired by image_440246.png -->
             <div class="avatar-container">
