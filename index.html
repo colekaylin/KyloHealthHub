@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kylo's Health & Growth Tracker</title>
+    <style>
+        :root {
+            --bg-color: #fcfbfa;
+            --card-bg: #ffffff;
+            --text-main: #2d2a29;
+            --text-muted: #7a7571;
+            --accent-color: #d96a5d; /* Beautiful soft terracotta/red */
+            --accent-light: #fdf5f3;
+            --border-color: #f0edea;
+            --shadow: 0 10px 30px rgba(163, 153, 143, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        /* Premium Header Styling */
+        header {
+            text-align: center;
+            padding: 20px 0 40px 0;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        /* Elegant Navigation Navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            background: #f1eeeb;
+            padding: 6px;
+            border-radius: 30px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 20px;
+            flex: 1;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        /* Content Areas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Aesthetics */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            margin-bottom: 24px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Minimalist Grid for Quick Profile */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+        }
+
+        .info-item {
+            background-color: #faf9f7;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid #f5f2ef;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .info-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Minimal Progress Bar Layout */
+        .progress-container {
+            margin: 24px 0 8px 0;
+        }
+
+        .progress-bar-bg {
+            background-color: #f3f0ed;
+            border-radius: 20px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--accent-color), #e88b7e);
+            height: 100%;
+            width: 0%; 
+            border-radius: 20px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Beautiful Clean Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 20px 0;
+            border-bottom: 1px solid #fdfcfb;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Pill Status Tags */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge.completed {
+            background-color: #e6f6ec;
+            color: #1c7d43;
+        }
+
+        .status-badge.upcoming {
+            background-color: #fff3e6;
+            color: #b86200;
+        }
+
+        /* Premium Editorial Photo Collage */
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .collage-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background-color: #f5f2ef;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        /* Varied sizes for a curated editorial collage feel */
+        .collage-item.tall {
+            grid-row: span 2;
+            height: 520px;
+        }
+        
+        .collage-item.standard {
+            height: 250px;
+        }
+
+        .collage-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .collage-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .collage-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: white;
+            padding: 24px 20px 20px 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 600px) {
+            .collage-grid {
+                grid-template-columns: 1fr;
+            }
+            .collage-item.tall {
+                height: 350px;
+                grid-row: span 1;
+            }
+            body { padding: 20px 12px; }
+            .card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Kylo’s Journey</h1>
+        <p>Health, Growth & Milestones</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
+        <button class="tab-btn" onclick="switchTab('health')">Health Logs</button>
+        <button class="tab-btn" onclick="switchTab('gallery')">Gallery</button>
+    </nav>
+
+    <!-- TAB 1: DASHBOARD -->
+    <section id="dashboard" class="tab-content active">
+        <div class="card">
+            <h2>Quick Profile</h2>
+            <div class="info-grid">
+                <div class="info-item"><label>Breed</label><p>Cavapoo</p></div>
+                <div class="info-item"><label>Gender</label><p>Female</p></div>
+                <div class="info-item"><label>Birthday</label><p>August 2026</p></div>
+                <div class="info-item"><label>Homecoming</label><p>Oct 10, 2026</p></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Growth Milestone</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Tracking progress toward expected adult weight:</p>
+            <div class="progress-container">
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">
+                    <span id="current-weight-text">Current: 4 lbs</span>
+                    <span>Target: 12 lbs</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progress-fill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 2: HEALTH LOGS -->
+    <section id="health" class="tab-content">
+        <div class="card">
+            <h2>Important Info</h2>
+            <div class="info-grid">
+                <div class="info-item"><label>Microchip #</label><p>981022300456XXX</p></div>
+                <div class="info-item"><label>Primary Vet</label><p>South Bay Vet</p></div>
+                <div class="info-item"><label>Diet</label><p>High-Protein Blend</p></div>
+            </div>
+        </div>
+
+        <div class="card" style="overflow-x: auto;">
+            <h2>Vaccine & Health Records</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Date</th>
+                        <th style="width: 35%;">Event / Type</th>
+                        <th style="width: 20%;">Status</th>
+                        <th style="width: 25%;">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10/12/2026</td>
+                        <td style="font-weight: 600;">DHPP Booster #1</td>
+                        <td><span class="status-badge completed">Completed</span></td>
+                        <td style="color: var(--text-muted); font-size: 0.9rem;">Initial vet checkup.</td>
+                    </tr>
+                    <tr>
+                        <td>11/09/2026</td>
+                        <td style="font-weight: 600;">DHPP Booster #2</td>
+                        <td><span class="status-badge upcoming">Upcoming</span></td>
+                        <td style="color: var(--text-muted); font-size: 0.9rem;">Bordetella included.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TAB 3: PHOTO GALLERY -->
+    <section id="gallery" class="tab-content">
+        <div class="card">
+            <h2>Memory Collage</h2>
+            <p style="color: var(--text-muted); margin-bottom: 32px; font-size: 0.95rem;">A beautiful visual look at Kylo growing up.</p>
+            
+            <div class="collage-grid">
+                <!-- Collage Item 1 (Standard) -->
+                <div class="collage-item standard">
+                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Puppy Pic 1">
+                    <div class="collage-caption">First day home!</div>
+                </div>
+                <!-- Collage Item 2 (Tall/Staggered) -->
+                <div class="collage-item tall">
+                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=600" alt="Puppy Pic 2">
+                    <div class="collage-caption">Exploring the world</div>
+                </div>
+                <!-- Collage Item 3 (Standard) -->
+                <div class="collage-item standard" style="margin-top: -250px;">
+                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600" alt="Puppy Pic 3">
+                    <div class="collage-caption">Nap time after training</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    window.onload = function() {
+        const currentWeight = 4; 
+        const targetWeight = 12; 
+        
+        const percentage = (currentWeight / targetWeight) * 100;
+        document.getElementById('progress-fill').style.width = percentage + '%';
+    }
+</script>
+
+</body>
+</html>
