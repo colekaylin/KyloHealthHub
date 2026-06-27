@@ -11,7 +11,7 @@
     
     <style>
         :root {
-            --bg-mint: #e2f4f7;       /* The minty fresh blue from the image */
+            --bg-pink: #fceeed;       /* Updated to a beautiful soft pastel pink */
             --bg-cream: #fffde6;      /* The soft pale yellow */
             --bg-lavender: #eae4f7;   /* The top soft purple */
             --text-dark: #000000;
@@ -29,7 +29,7 @@
         }
 
         body {
-            background-color: var(--bg-mint);
+            background-color: var(--bg-pink); /* Applied the soft pink background */
             color: var(--text-dark);
             padding: 0;
             min-height: 100vh;
@@ -334,7 +334,7 @@
                     <div class="profile-row"><label>Breed</label><span>Cavapoo</span></div>
                     <div class="profile-row"><label>Gender</label><span>Female</span></div>
                     <div class="profile-row"><label>Birthday</label><span>August 2026</span></div>
-                    <div class="profile-row"><label>Homecoming</label><span>October 10, 2026</span></div>
+                    <!-- Homecoming row successfully removed -->
                 </div>
 
                 <!-- Growth Tracking Box -->
@@ -392,15 +392,12 @@
                 <p style="margin-bottom: 20px; font-weight: 500;">Styled matching the unique geometric masks of your design inspiration.</p>
                 
                 <div class="collage-container">
-                    <!-- Shape 1: Crimson/Red profile circle element lookalike -->
                     <div class="shape-circle">
                         <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Kylo 1">
                     </div>
-                    <!-- Shape 2: The perfect landscape oval capsule -->
                     <div class="shape-capsule">
                         <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=600" alt="Kylo 2">
                     </div>
-                    <!-- Shape 3: Vertical Portrait Rounded Pill -->
                     <div class="shape-tall-pill">
                         <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600" alt="Kylo 3">
                     </div>
@@ -418,7 +415,6 @@
             
             document.getElementById(tabId).classList.add('active');
             
-            // Find navbar button to light up line accent
             const selectedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.innerText.toLowerCase().includes(tabId.replace('dashboard', 'home')));
             if(selectedBtn) selectedBtn.classList.add('active');
         }
